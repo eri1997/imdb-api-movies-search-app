@@ -9,7 +9,7 @@ const Search = () => {
 
     const handleSubmit= (e) =>{
       e.preventDefault()
-      navigate("/search/" + search)
+      navigate("/search/&title=" + search)
     }
     
   return (

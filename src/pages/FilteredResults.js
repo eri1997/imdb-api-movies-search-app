@@ -1,31 +1,14 @@
-import {useState,useEffect} from 'react'
 import styled from 'styled-components'
 import MovieCard from '../components/MovieCard'
 import { useParams } from 'react-router-dom'
+import useFetch from '../Utils/useFetch'
 
 
 const FilteredResults = () => {
-  const [movies, setMovies] = useState([])
-  const [isPending, setIsPending] = useState(true)
-  const [error, setError] = useState(null)
+
   let params = useParams()
 
-
-  const filteredMovies = async() =>{
-      try {
-        const data = await fetch(`https://imdb-api.com/API/AdvancedSearch/${process.env.REACT_APP_API_KEY}?groups=top_250${params.filters}&count=250`)
-        const res = await data.json()
-        setMovies(res.results)
-        setIsPending(false)
-        setError(null)
-      } catch(err){
-          setError(err.message)
-          setIsPending(false)
-      }}
-
-  useEffect(()=>{
-      filteredMovies()
-  },[params.filters])  
+  const {data:movies,isPending,error} = useFetch(params.filters)
 
 return (
   <Container>
@@ -46,6 +29,7 @@ const Wrapper = styled.div`
   display:flex;
   flex-direction: row;
   justify-content: center;
+  flex-wrap: wrap;
 `
 
 

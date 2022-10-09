@@ -4,7 +4,7 @@ import styled from "styled-components";
 const MovieCard = ({ title, image, description }) => {
   return (
         <Movie>
-          <StyledLinks to={"/movie/" + title}>
+          <StyledLinks to={"/movie/&title=" + title}>
             <img src={image} alt={title} loading="lazy" />
             <Info>
               <h2>{title}</h2>
@@ -38,7 +38,7 @@ const Info = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding:10px;
+  padding:10px; 
 
   h2, h3{
     margin:0;

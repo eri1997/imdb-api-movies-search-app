@@ -1,28 +1,10 @@
-import {useState, useEffect} from 'react'
 import styled from 'styled-components'
 import MovieCard from './MovieCard'
+import useFetch from '../Utils/useFetch'
 
 const MovieList = () => {
-    const [movies , setMovies] = useState([])
-    const [isPending, setIsPending] = useState(true)
-    const [error, setError] = useState(null)
 
-    const fetchMovies = async () =>{
-      try{
-        const res = await fetch(`https://imdb-api.com/API/AdvancedSearch/${process.env.REACT_APP_API_KEY}?groups=top_250&count=250`)
-        const data = await res.json()
-        setMovies(data.results)
-        setIsPending(false)
-        setError(null)
-      }catch(err){
-        setIsPending(false)
-        setError(err.message)
-      }  
-    }
-  
-    useEffect(()=>{
-      fetchMovies()
-    }, [])
+    const {data:movies, error, isPending} = useFetch("")
   
   return (
     <>
@@ -30,7 +12,7 @@ const MovieList = () => {
     <Container>
         {isPending && <div>LOADING MOVIES...</div>}
         {error && <div> {error} </div>}
-        {movies?.length > 0 && movies.map(movie=><MovieCard {...movie} key={movie.id} />)}
+        {movies.map(movie=><MovieCard {...movie} key={movie.id} />)}
     </Container>
     </>
   )
